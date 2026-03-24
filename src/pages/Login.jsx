@@ -26,7 +26,7 @@ const Login = () => {
 
       localStorage.setItem("token", data.token);
 
-      navigate("/dashboard", { replace: true });
+      window.location.hash = "/login";
 
     } catch (err) {
       alert(err.response?.data?.message || "Invalid credentials");
