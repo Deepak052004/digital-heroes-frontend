@@ -1,12 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -19,7 +18,7 @@ const Register = () => {
         { name, email, password }
       );
       alert("Registered successfully");
-      navigate("/login"); // ✅ Use navigate instead of window.location.hash
+      window.location.href = "/#/login";   // ✅ Hash-based navigation
     } catch (err) {
       alert(err.response?.data?.message || "Registration failed");
     }

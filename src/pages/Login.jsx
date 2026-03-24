@@ -1,12 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Login = ({ setToken }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -20,9 +19,9 @@ const Login = ({ setToken }) => {
         { email, password }
       );
       localStorage.setItem("token", data.token);
-      setToken(data.token); // ✅ Update token state immediately
-      window.dispatchEvent(new Event("storage")); // ✅ Notify App.js of token change
-      navigate("/dashboard"); // ✅ Use navigate instead of window.location.hash
+      setToken(data.token);                          // ✅ Update token state immediately
+      window.dispatchEvent(new Event("storage"));    // ✅ Notify App.js
+      window.location.href = "/#/dashboard";         // ✅ Hash-based navigation
     } catch (err) {
       alert(err.response?.data?.message || "Invalid credentials");
     } finally {
