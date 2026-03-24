@@ -12,7 +12,7 @@ const Home = () => {
 
       <div className="flex gap-6">
 
-        {/* ✅ FIXED LOGIN */}
+        {/* ✅ LOGIN BUTTON */}
         <a
           href="/#/login"
           className="bg-blue-500 px-6 py-3 rounded hover:bg-blue-600 transition"
@@ -20,7 +20,7 @@ const Home = () => {
           Login
         </a>
 
-        {/* ✅ FIXED REGISTER */}
+        {/* ✅ REGISTER BUTTON */}
         <a
           href="/#/register"
           className="bg-purple-500 px-6 py-3 rounded hover:bg-purple-600 transition"

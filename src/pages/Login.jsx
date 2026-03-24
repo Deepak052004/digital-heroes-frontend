@@ -50,7 +50,7 @@ const Login = ({ setToken }) => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit" className="w-full bg-blue-500 p-3 rounded">
+        <button type="submit" className="w-full bg-blue-500 p-3 rounded hover:bg-blue-600">
           {loading ? "Logging in..." : "Login"}
         </button>
         <p className="text-center mt-4">

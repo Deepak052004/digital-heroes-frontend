@@ -27,22 +27,15 @@ function App() {
     <Router>
       <div className="min-h-screen text-white">
         <Routes>
-          {/* HOME */}
           <Route path="/" element={<Home />} />
-
-          {/* LOGIN */}
           <Route
             path="/login"
             element={!token ? <Login setToken={setToken} /> : <Navigate to="/dashboard" />}
           />
-
-          {/* REGISTER */}
           <Route
             path="/register"
             element={!token ? <Register /> : <Navigate to="/dashboard" />}
           />
-
-          {/* DASHBOARD */}
           <Route
             path="/dashboard"
             element={
@@ -51,8 +44,6 @@ function App() {
               </PrivateRoute>
             }
           />
-
-          {/* DRAW */}
           <Route
             path="/draw"
             element={

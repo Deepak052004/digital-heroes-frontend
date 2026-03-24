@@ -52,7 +52,7 @@ const Register = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit" className="w-full bg-purple-500 p-3 rounded">
+        <button type="submit" className="w-full bg-purple-500 p-3 rounded hover:bg-purple-600">
           Register
         </button>
         <p className="text-center mt-4">
