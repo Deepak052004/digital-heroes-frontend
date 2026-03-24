@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Smooth UI (optimized) */
+button, a {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Scrollbar (premium touch) */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: #4f46e5;
+  border-radius: 10px;
+}
+
+/* Fade animation for draw numbers */
+@keyframes fadeInUp {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Optional: remove default body margin */
+body {
+  margin: 0;
+  background-color: #000;
+}
