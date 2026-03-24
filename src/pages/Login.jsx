@@ -1,11 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate(); // ✅ IMPORTANT
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -24,7 +26,9 @@ const Login = () => {
 
       localStorage.setItem("token", data.token);
 
-      window.location.href = "/dashboard";
+      // ✅ FIXED (NO PAGE RELOAD)
+      navigate("/dashboard");
+
     } catch (err) {
       alert(err.response?.data?.message || "Invalid credentials");
     } finally {
