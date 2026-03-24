@@ -1,5 +1,5 @@
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Routes,
   Route,
   Link,
@@ -20,9 +20,9 @@ import PrivateRoute from "./components/PrivateRoute";
 function Layout() {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const location = useLocation();
-  const navigate = useNavigate(); // ✅ correct
+  const navigate = useNavigate();
 
-  // Sync token
+  // Sync token across tabs
   useEffect(() => {
     const checkToken = () => {
       setToken(localStorage.getItem("token"));
@@ -32,14 +32,15 @@ function Layout() {
     return () => window.removeEventListener("storage", checkToken);
   }, []);
 
+  // Hide navbar on auth pages
   const hideNavbar =
     location.pathname === "/login" || location.pathname === "/register";
 
-  // ✅ FIXED logout
+  // Logout
   const logout = () => {
     localStorage.removeItem("token");
     setToken(null);
-    navigate("/"); // no reload
+    navigate("/");
   };
 
   return (
@@ -84,21 +85,22 @@ function Layout() {
         <div className="px-4 md:px-8">
           <Routes>
 
+            {/* HOME */}
             <Route path="/" element={<Home />} />
 
-            {/* Login */}
+            {/* LOGIN */}
             <Route
               path="/login"
               element={!token ? <Login /> : <Navigate to="/dashboard" />}
             />
 
-            {/* Register */}
+            {/* REGISTER */}
             <Route
               path="/register"
               element={!token ? <Register /> : <Navigate to="/dashboard" />}
             />
 
-            {/* Protected */}
+            {/* PROTECTED ROUTES */}
             <Route
               path="/dashboard"
               element={
