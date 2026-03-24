@@ -22,7 +22,7 @@ function Layout() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Sync token across tabs
+  // Sync token
   useEffect(() => {
     const checkToken = () => {
       setToken(localStorage.getItem("token"));
@@ -40,7 +40,7 @@ function Layout() {
   const logout = () => {
     localStorage.removeItem("token");
     setToken(null);
-    navigate("/");
+    navigate("/", { replace: true });
   };
 
   return (
@@ -49,7 +49,6 @@ function Layout() {
       {/* BACKGROUND */}
       <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"></div>
 
-      {/* CONTENT */}
       <div className="relative z-10">
 
         {/* NAVBAR */}
@@ -60,19 +59,19 @@ function Layout() {
               🎯 Digital Heroes
             </h1>
 
-            <div className="flex items-center gap-4 md:gap-6 text-sm md:text-base">
+            <div className="flex items-center gap-4 md:gap-6">
 
-              <Link to="/dashboard" className="hover:text-blue-400 transition">
+              <Link to="/dashboard" className="hover:text-blue-400">
                 Dashboard
               </Link>
 
-              <Link to="/draw" className="hover:text-purple-400 transition">
+              <Link to="/draw" className="hover:text-purple-400">
                 Draw
               </Link>
 
               <button
                 onClick={logout}
-                className="bg-red-500 px-3 md:px-4 py-1 rounded hover:bg-red-600 transition"
+                className="bg-red-500 px-4 py-1 rounded hover:bg-red-600"
               >
                 Logout
               </button>
@@ -85,22 +84,18 @@ function Layout() {
         <div className="px-4 md:px-8">
           <Routes>
 
-            {/* HOME */}
             <Route path="/" element={<Home />} />
 
-            {/* LOGIN */}
             <Route
               path="/login"
-              element={!token ? <Login /> : <Navigate to="/dashboard" />}
+              element={!token ? <Login /> : <Navigate to="/dashboard" replace />}
             />
 
-            {/* REGISTER */}
             <Route
               path="/register"
-              element={!token ? <Register /> : <Navigate to="/dashboard" />}
+              element={!token ? <Register /> : <Navigate to="/dashboard" replace />}
             />
 
-            {/* PROTECTED ROUTES */}
             <Route
               path="/dashboard"
               element={
