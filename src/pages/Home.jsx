@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 const Home = () => {
   return (
     <div className="text-white min-h-screen flex flex-col items-center justify-center text-center">
@@ -13,13 +11,23 @@ const Home = () => {
       </p>
 
       <div className="flex gap-6">
-        <Link to="/login" className="bg-blue-500 px-6 py-3 rounded">
-          Login
-        </Link>
 
-        <Link to="/register" className="bg-purple-500 px-6 py-3 rounded">
+        {/* ✅ FIXED LOGIN */}
+        <a
+          href="/#/login"
+          className="bg-blue-500 px-6 py-3 rounded hover:bg-blue-600 transition"
+        >
+          Login
+        </a>
+
+        {/* ✅ FIXED REGISTER */}
+        <a
+          href="/#/register"
+          className="bg-purple-500 px-6 py-3 rounded hover:bg-purple-600 transition"
+        >
           Register
-        </Link>
+        </a>
+
       </div>
 
     </div>
