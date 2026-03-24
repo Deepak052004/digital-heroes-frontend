@@ -1,11 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate(); // ✅ IMPORTANT
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -25,8 +27,8 @@ const Login = () => {
       // ✅ Store token
       localStorage.setItem("token", data.token);
 
-      // ✅ FORCE navigation with hash (IMPORTANT)
-      window.location.href = "/#/dashboard";
+      // ✅ CORRECT navigation (NO reload, NO 404)
+      navigate("/dashboard", { replace: true });
 
     } catch (err) {
       alert(err.response?.data?.message || "Invalid credentials");
@@ -45,6 +47,7 @@ const Login = () => {
           Welcome Back 👋
         </h2>
 
+        {/* EMAIL */}
         <label className="text-sm text-gray-400">Email</label>
         <input
           type="email"
@@ -54,6 +57,7 @@ const Login = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
 
+        {/* PASSWORD */}
         <label className="text-sm text-gray-400">Password</label>
         <input
           type="password"
@@ -63,6 +67,7 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
+        {/* BUTTON */}
         <button
           disabled={loading}
           className={`w-full p-3 rounded font-semibold ${
@@ -74,12 +79,14 @@ const Login = () => {
           {loading ? "Logging in..." : "Login"}
         </button>
 
+        {/* REGISTER LINK */}
         <p className="text-gray-400 text-sm text-center mt-4">
           Don't have an account?{" "}
-          <a href="/#/register" className="text-blue-400 hover:underline">
+          <Link to="/register" className="text-blue-400 hover:underline">
             Register
-          </a>
+          </Link>
         </p>
+
       </form>
     </div>
   );
