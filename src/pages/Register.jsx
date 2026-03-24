@@ -8,7 +8,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate(); // ✅ IMPORTANT
+  const navigate = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -25,7 +25,11 @@ const Register = () => {
         { name, email, password }
       );
 
-      // ✅ FIXED (NO RELOAD)
+      alert("Registered successfully");
+
+      // 🔥 IMPORTANT FIX
+      window.dispatchEvent(new Event("storage"));
+
       navigate("/login");
 
     } catch (err) {

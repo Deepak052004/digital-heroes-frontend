@@ -7,7 +7,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate(); // ✅ IMPORTANT
+  const navigate = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -24,9 +24,13 @@ const Login = () => {
         { email, password }
       );
 
+      // ✅ STORE TOKEN
       localStorage.setItem("token", data.token);
 
-      // ✅ FIXED (NO PAGE RELOAD)
+      // 🔥 FORCE RE-RENDER SIGNAL
+      window.dispatchEvent(new Event("storage"));
+
+      // ✅ NAVIGATE
       navigate("/dashboard");
 
     } catch (err) {
