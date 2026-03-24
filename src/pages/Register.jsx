@@ -1,12 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate(); // ✅ IMPORTANT
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -23,10 +25,11 @@ const Register = () => {
         { name, email, password }
       );
 
-      alert("Registration successful!");
-      window.location.href = "/login";
+      // ✅ FIXED (NO RELOAD)
+      navigate("/login");
+
     } catch (err) {
-      alert(err.response?.data?.message || "Error registering");
+      alert(err.response?.data?.message || "Registration failed");
     } finally {
       setLoading(false);
     }
@@ -84,7 +87,7 @@ const Register = () => {
                 : "bg-purple-500 hover:bg-purple-600"
             }`}
         >
-          {loading ? "Registering..." : "Register"}
+          {loading ? "Creating account..." : "Register"}
         </button>
 
         {/* LINK */}
