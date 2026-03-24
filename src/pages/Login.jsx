@@ -19,9 +19,9 @@ const Login = ({ setToken }) => {
         { email, password }
       );
       localStorage.setItem("token", data.token);
-      setToken(data.token);                          // ✅ Update token state immediately
-      window.dispatchEvent(new Event("storage"));    // ✅ Notify App.js
-      window.location.href = "/#/dashboard";         // ✅ Hash-based navigation
+      setToken(data.token);
+      window.dispatchEvent(new Event("storage"));
+      window.location.href = "/#/dashboard";
     } catch (err) {
       alert(err.response?.data?.message || "Invalid credentials");
     } finally {
@@ -50,7 +50,7 @@ const Login = ({ setToken }) => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className="w-full bg-blue-500 p-3 rounded">
+        <button type="submit" className="w-full bg-blue-500 p-3 rounded">
           {loading ? "Logging in..." : "Login"}
         </button>
         <p className="text-center mt-4">

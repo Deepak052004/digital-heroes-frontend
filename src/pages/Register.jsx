@@ -18,7 +18,7 @@ const Register = () => {
         { name, email, password }
       );
       alert("Registered successfully");
-      window.location.href = "/#/login";   // ✅ Hash-based navigation
+      window.location.href = "/#/login";
     } catch (err) {
       alert(err.response?.data?.message || "Registration failed");
     }
@@ -52,7 +52,7 @@ const Register = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className="w-full bg-purple-500 p-3 rounded">
+        <button type="submit" className="w-full bg-purple-500 p-3 rounded">
           Register
         </button>
         <p className="text-center mt-4">
