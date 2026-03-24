@@ -1,11 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -15,8 +17,6 @@ const Register = () => {
     }
 
     try {
-      setLoading(true);
-
       await axios.post(
         "https://digital-heroes-backend.onrender.com/api/auth/register",
         { name, email, password }
@@ -24,70 +24,51 @@ const Register = () => {
 
       alert("Registered successfully");
 
-      // ✅ FORCE hash navigation
-      window.location.href = "/#/login";
+      navigate("/login", { replace: true });
 
     } catch (err) {
       alert(err.response?.data?.message || "Registration failed");
-    } finally {
-      setLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
-      <form
-        onSubmit={submitHandler}
-        className="bg-gray-900/80 backdrop-blur-lg p-8 rounded-xl w-full max-w-md shadow-lg border border-gray-700"
-      >
-        <h2 className="text-3xl mb-6 text-center font-semibold">
-          Create Account 🚀
-        </h2>
+      <form onSubmit={submitHandler} className="bg-gray-900 p-8 rounded-xl w-full max-w-md">
 
-        <label className="text-sm text-gray-400">Name</label>
+        <h2 className="text-3xl mb-6 text-center">Register</h2>
+
         <input
           type="text"
-          placeholder="Enter your name"
-          className="w-full p-3 mb-4 bg-gray-800 rounded outline-none focus:ring-2 focus:ring-purple-500"
+          placeholder="Name"
+          className="w-full p-3 mb-4 bg-gray-800 rounded"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
 
-        <label className="text-sm text-gray-400">Email</label>
         <input
           type="email"
-          placeholder="Enter your email"
-          className="w-full p-3 mb-4 bg-gray-800 rounded outline-none focus:ring-2 focus:ring-purple-500"
+          placeholder="Email"
+          className="w-full p-3 mb-4 bg-gray-800 rounded"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        <label className="text-sm text-gray-400">Password</label>
         <input
           type="password"
-          placeholder="Enter your password"
-          className="w-full p-3 mb-6 bg-gray-800 rounded outline-none focus:ring-2 focus:ring-purple-500"
+          placeholder="Password"
+          className="w-full p-3 mb-6 bg-gray-800 rounded"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button
-          disabled={loading}
-          className={`w-full p-3 rounded font-semibold ${
-            loading
-              ? "bg-gray-600 cursor-not-allowed"
-              : "bg-purple-500 hover:bg-purple-600"
-          }`}
-        >
-          {loading ? "Creating account..." : "Register"}
+        <button className="w-full bg-purple-500 p-3 rounded">
+          Register
         </button>
 
-        <p className="text-gray-400 text-sm text-center mt-4">
-          Already have an account?{" "}
-          <a href="/#/login" className="text-purple-400 hover:underline">
-            Login
-          </a>
+        <p className="text-center mt-4">
+          Already have an account? <Link to="/login">Login</Link>
         </p>
+
       </form>
     </div>
   );

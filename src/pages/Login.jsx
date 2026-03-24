@@ -7,7 +7,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate(); // ✅ IMPORTANT
+  const navigate = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -24,10 +24,8 @@ const Login = () => {
         { email, password }
       );
 
-      // ✅ Store token
       localStorage.setItem("token", data.token);
 
-      // ✅ CORRECT navigation (NO reload, NO 404)
       navigate("/dashboard", { replace: true });
 
     } catch (err) {
@@ -39,52 +37,32 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
-      <form
-        onSubmit={submitHandler}
-        className="bg-gray-900/80 backdrop-blur-lg p-8 rounded-xl w-full max-w-md shadow-lg border border-gray-700"
-      >
-        <h2 className="text-3xl mb-6 text-center font-semibold">
-          Welcome Back 👋
-        </h2>
+      <form onSubmit={submitHandler} className="bg-gray-900 p-8 rounded-xl w-full max-w-md">
 
-        {/* EMAIL */}
-        <label className="text-sm text-gray-400">Email</label>
+        <h2 className="text-3xl mb-6 text-center">Login</h2>
+
         <input
           type="email"
-          placeholder="Enter your email"
-          className="w-full p-3 mb-4 bg-gray-800 rounded outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Email"
+          className="w-full p-3 mb-4 bg-gray-800 rounded"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        {/* PASSWORD */}
-        <label className="text-sm text-gray-400">Password</label>
         <input
           type="password"
-          placeholder="Enter your password"
-          className="w-full p-3 mb-6 bg-gray-800 rounded outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Password"
+          className="w-full p-3 mb-6 bg-gray-800 rounded"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        {/* BUTTON */}
-        <button
-          disabled={loading}
-          className={`w-full p-3 rounded font-semibold ${
-            loading
-              ? "bg-gray-600 cursor-not-allowed"
-              : "bg-blue-500 hover:bg-blue-600"
-          }`}
-        >
+        <button className="w-full bg-blue-500 p-3 rounded">
           {loading ? "Logging in..." : "Login"}
         </button>
 
-        {/* REGISTER LINK */}
-        <p className="text-gray-400 text-sm text-center mt-4">
-          Don't have an account?{" "}
-          <Link to="/register" className="text-blue-400 hover:underline">
-            Register
-          </Link>
+        <p className="text-center mt-4">
+          No account? <Link to="/register">Register</Link>
         </p>
 
       </form>
