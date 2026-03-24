@@ -4,11 +4,8 @@ import {
   Route,
   Link,
   useLocation,
-  Navigate,
   useNavigate,
 } from "react-router-dom";
-
-import { useState, useEffect } from "react";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -18,19 +15,11 @@ import Draw from "./pages/Draw";
 import PrivateRoute from "./components/PrivateRoute";
 
 function Layout() {
-  const [token, setToken] = useState(localStorage.getItem("token"));
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Sync token
-  useEffect(() => {
-    const checkToken = () => {
-      setToken(localStorage.getItem("token"));
-    };
-
-    window.addEventListener("storage", checkToken);
-    return () => window.removeEventListener("storage", checkToken);
-  }, []);
+  // ✅ Direct token check (NO state)
+  const token = localStorage.getItem("token");
 
   // Hide navbar on auth pages
   const hideNavbar =
@@ -39,8 +28,7 @@ function Layout() {
   // Logout
   const logout = () => {
     localStorage.removeItem("token");
-    setToken(null);
-    navigate("/", { replace: true });
+    navigate("/login", { replace: true });
   };
 
   return (
@@ -84,18 +72,12 @@ function Layout() {
         <div className="px-4 md:px-8">
           <Routes>
 
+            {/* PUBLIC */}
             <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
-            <Route
-              path="/login"
-              element={!token ? <Login /> : <Navigate to="/dashboard" replace />}
-            />
-
-            <Route
-              path="/register"
-              element={!token ? <Register /> : <Navigate to="/dashboard" replace />}
-            />
-
+            {/* PROTECTED */}
             <Route
               path="/dashboard"
               element={
