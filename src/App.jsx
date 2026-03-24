@@ -5,7 +5,10 @@ import {
   Link,
   useLocation,
   Navigate,
+  useNavigate,
 } from "react-router-dom";
+
+import { useState, useEffect } from "react";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -15,24 +18,37 @@ import Draw from "./pages/Draw";
 import PrivateRoute from "./components/PrivateRoute";
 
 function Layout() {
-  const token = localStorage.getItem("token");
+  const [token, setToken] = useState(localStorage.getItem("token"));
   const location = useLocation();
+  const navigate = useNavigate(); // ✅ correct
+
+  // Sync token
+  useEffect(() => {
+    const checkToken = () => {
+      setToken(localStorage.getItem("token"));
+    };
+
+    window.addEventListener("storage", checkToken);
+    return () => window.removeEventListener("storage", checkToken);
+  }, []);
 
   const hideNavbar =
     location.pathname === "/login" || location.pathname === "/register";
 
+  // ✅ FIXED logout
   const logout = () => {
     localStorage.removeItem("token");
-    window.location.href = "/";
+    setToken(null);
+    navigate("/"); // no reload
   };
 
   return (
     <div className="relative min-h-screen text-white overflow-x-hidden">
 
-      {/* 🔥 BACKGROUND */}
+      {/* BACKGROUND */}
       <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black"></div>
 
-      {/* 🔥 CONTENT */}
+      {/* CONTENT */}
       <div className="relative z-10">
 
         {/* NAVBAR */}
@@ -45,17 +61,11 @@ function Layout() {
 
             <div className="flex items-center gap-4 md:gap-6 text-sm md:text-base">
 
-              <Link
-                to="/dashboard"
-                className="hover:text-blue-400 transition"
-              >
+              <Link to="/dashboard" className="hover:text-blue-400 transition">
                 Dashboard
               </Link>
 
-              <Link
-                to="/draw"
-                className="hover:text-purple-400 transition"
-              >
+              <Link to="/draw" className="hover:text-purple-400 transition">
                 Draw
               </Link>
 
@@ -65,27 +75,30 @@ function Layout() {
               >
                 Logout
               </button>
-            </div>
 
+            </div>
           </nav>
         )}
 
         {/* ROUTES */}
         <div className="px-4 md:px-8">
           <Routes>
+
             <Route path="/" element={<Home />} />
 
-            {/* Redirect if already logged in */}
+            {/* Login */}
             <Route
               path="/login"
               element={!token ? <Login /> : <Navigate to="/dashboard" />}
             />
 
+            {/* Register */}
             <Route
               path="/register"
               element={!token ? <Register /> : <Navigate to="/dashboard" />}
             />
 
+            {/* Protected */}
             <Route
               path="/dashboard"
               element={
@@ -103,6 +116,7 @@ function Layout() {
                 </PrivateRoute>
               }
             />
+
           </Routes>
         </div>
 
