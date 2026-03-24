@@ -24,7 +24,7 @@ const Register = () => {
 
       alert("Registered successfully");
 
-      window.location.hash = "/dashboard";
+      window.location.hash = "/login";
 
     } catch (err) {
       alert(err.response?.data?.message || "Registration failed");

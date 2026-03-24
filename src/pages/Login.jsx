@@ -26,7 +26,7 @@ const Login = () => {
 
       localStorage.setItem("token", data.token);
 
-      window.location.hash = "/login";
+      window.location.hash = "/Register";
 
     } catch (err) {
       alert(err.response?.data?.message || "Invalid credentials");
